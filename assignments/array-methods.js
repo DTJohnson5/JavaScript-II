@@ -58,21 +58,36 @@ const runners = [
 // ==== Challenge 1: Use .forEach() ====
 // The event director needs both the first and last names of each runner for their running bibs. Combine both the first and last names and populate a new array called `fullNames`. This array will contain just strings.
 let fullNames = [];
+runners.forEach(function(item) {
+  fullNames.push(item.first_name + " " + item.last_name);
+});
 console.log(fullNames);
 
 // ==== Challenge 2: Use .map() ====
 // The event director needs to have all the runners' first names in uppercase because the director BECAME DRUNK WITH POWER. Populate an array called `firstNamesAllCaps`. This array will contain just strings.
 let firstNamesAllCaps = [];
+runners.map((runner, index) => {
+  firstNamesAllCaps[index] = runner.first_name.toUpperCase();
+});
 console.log(firstNamesAllCaps);
 
 // ==== Challenge 3: Use .filter() ====
 // The large shirts won't be available for the event due to an ordering issue. We need a filtered version of the runners array, containing only those runners with large sized shirts so they can choose a different size. This will be an array of objects.
 let runnersLargeSizeShirt = [];
+runnersLargeSizeShirt = runners.filter(runner => {
+  return runner.shirt_size === "L";
+});
 console.log(runnersLargeSizeShirt);
 
 // ==== Challenge 4: Use .reduce() ====
 // The donations need to be tallied up and reported for tax purposes. Add up all the donations and save the total into a ticketPriceTotal variable.
-let ticketPriceTotal = 0;
+let ticketPriceTotal = [];
+let runnersTotal = runners.reduce(
+  (ticketPriceTotal, reduction) => ticketPriceTotal + reduction.donation,
+  0
+);
+ticketPriceTotal.push(runnersTotal)
+
 console.log(ticketPriceTotal);
 
 // ==== Challenge 5: Be Creative ====
@@ -80,6 +95,47 @@ console.log(ticketPriceTotal);
 
 // Problem 1
 
+// Sorting companies in alphabetical order by name.
+
+let companyName = [];
+runners.forEach(item => companyName.push(`${item.company_name}`));
+companyName.sort(function (a, b) {
+  var compA = a.toUpperCase();
+  var compB = b.toUpperCase();
+  if (compA < compB) {
+    return -1;
+  }
+  if (compA > compB) {
+    return 1;
+  } else {
+    return 0;
+  }
+});
+console.log(companyName);
+
 // Problem 2
 
+// All participating employees who donated more than $250 are being given a day off.
+// Find and display them...
+
+let dayOff = [];
+dayOff = runners.filter(employees => {
+  return employees.donation >= "250";
+});
+console.log(dayOff);
+
 // Problem 3
+
+// Hank Zebedee, an employee at Gigashots, came to work with really bad allergies and may have infected
+// his fellow coworkers as well as a few partnering business employees.
+// Find and display the the employees at his company as well as two additional organizations (of your choosing).
+
+let infected = [];
+infected = runners.filter(employees => {
+  return (
+    employees.company_name === "BlueJam" ||
+    employees.company_name === "Gigashots" ||
+    employees.company_name === "Skinte"
+  );
+});
+console.log(infected);
